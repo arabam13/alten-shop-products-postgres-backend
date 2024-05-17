@@ -3,7 +3,7 @@ const router = express.Router();
 
 const productCtrl = require("../controllers/products.controller");
 
-// router.get("/seed", productCtrl.seed);
+router.get("/seed", productCtrl.seed);
 router.get("/", productCtrl.findAll);
 router.get("/:id", productCtrl.findOne);
 router.post("/", productCtrl.create);

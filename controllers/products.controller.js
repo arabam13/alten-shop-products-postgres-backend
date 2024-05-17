@@ -4,6 +4,9 @@ const dummyProducts = require("../products.json");
 
 exports.seed = async (req, res) => {
   try {
+    // delete all products
+    await Products.destroy({ where: {} });
+    // seed products
     await Products.bulkCreate(dummyProducts.data);
     return res.status(201).json({ message: "Products Seeded Successfully" });
   } catch (err) {
@@ -12,8 +15,18 @@ exports.seed = async (req, res) => {
 };
 
 exports.findAll = async (req, res) => {
-  const products = await Products.findAll({});
-  return res.status(200).json(products);
+  try {
+    const currentPage = +req.query._page || 1;
+    const pageSize = +req.query._limit || 10;
+    const filteredProduct = await Products.findAll({
+      offset: pageSize * (currentPage - 1),
+      limit: pageSize,
+    });
+    const totolPosts = await Products.count();
+    return res.status(200).json({ products: filteredProduct, totolPosts });
+  } catch (e) {
+    return res.status(500).json({ message: "Something went wrong" });
+  }
 };
 
 exports.findOne = async (req, res) => {
