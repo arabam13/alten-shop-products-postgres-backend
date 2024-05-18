@@ -22,8 +22,11 @@ exports.findAll = async (req, res) => {
       offset: pageSize * (currentPage - 1),
       limit: pageSize,
     });
-    const totolPosts = await Products.count();
-    return res.status(200).json({ products: filteredProduct, totolPosts });
+    const totolProducts = await Products.count();
+    return res.status(200).json({
+      products: filteredProduct,
+      totolProducts,
+    });
   } catch (e) {
     return res.status(500).json({ message: "Something went wrong" });
   }
