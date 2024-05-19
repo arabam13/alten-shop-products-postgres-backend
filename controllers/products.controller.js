@@ -10,7 +10,7 @@ exports.seed = async (req, res) => {
     await Products.bulkCreate(dummyProducts.data);
     return res.status(201).json({ message: "Products Seeded Successfully" });
   } catch (err) {
-    return res.status(500).json({ error: new Error("Something went wrong") });
+    return res.status(500).json({ error: "Something went wrong" });
   }
 };
 
@@ -34,11 +34,15 @@ exports.findAll = async (req, res) => {
 };
 
 exports.findOne = async (req, res) => {
-  const product = await Products.findOne({ where: { id: +req.params.id } });
-  if (!product) {
-    return res.status(404).json({ error: new Error("Product not found") });
+  try {
+    const product = await Products.findOne({ where: { id: +req.params.id } });
+    if (!product) {
+      return res.status(404).json({ error: "Product not found" });
+    }
+    return res.status(200).json(product);
+  } catch (e) {
+    return res.status(500).json({ error: "Something went wrong" });
   }
-  return res.status(200).json(product);
 };
 
 exports.create = async (req, res) => {
@@ -57,7 +61,7 @@ exports.create = async (req, res) => {
     });
     return res.status(201).json(product);
   } catch (err) {
-    return res.status(500).json({ error: new Error("Something went wrong") });
+    return res.status(500).json({ error: "Something went wrong" });
   }
 };
 
@@ -67,7 +71,7 @@ exports.update = async (req, res) => {
     await Products.update({ code, name }, { where: { id: +req.params.id } });
     return res.status(200).json({ message: "Product Updated Successfully" });
   } catch (e) {
-    return res.status(500).json({ error: new Error("Something went wrong") });
+    return res.status(500).json({ error: "Something went wrong" });
   }
 };
 
@@ -76,6 +80,6 @@ exports.delete = async (req, res) => {
     await Products.destroy({ where: { id: +req.params.id } });
     return res.status(204).json({ message: "Product Deleted Successfully" });
   } catch (e) {
-    return res.status(500).json({ error: new Error("Something went wrong") });
+    return res.status(500).json({ error: "Something went wrong" });
   }
 };
