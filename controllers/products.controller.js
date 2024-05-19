@@ -42,28 +42,18 @@ exports.findOne = async (req, res) => {
 };
 
 exports.create = async (req, res) => {
-  const {
-    code,
-    name,
-    description,
-    price,
-    quantity,
-    inventoryStatus,
-    category,
-    image,
-    rating,
-  } = req.body;
+  const { code, name } = req.body;
   try {
     const product = await Products.create({
       code,
       name,
-      description,
-      price,
-      quantity,
-      inventoryStatus,
-      category,
-      image,
-      rating,
+      description: "Product Description",
+      price: 100,
+      quantity: 5,
+      inventoryStatus: "INSTOCK",
+      category: "Category NAME",
+      image: "",
+      rating: 0,
     });
     return res.status(201).json(product);
   } catch (err) {
