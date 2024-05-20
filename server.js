@@ -46,12 +46,6 @@ server.on("listening", () => {
   console.log(
     "Swagger link: " + "http://localhost:" + bind.split(" ")[1] + "/api-docs"
   );
-  console.log(
-    "Api GET Products: " +
-      "http://localhost:" +
-      bind.split(" ")[1] +
-      "/api/products"
-  );
 });
 
 server.listen(port);
