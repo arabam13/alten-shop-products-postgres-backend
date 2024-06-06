@@ -17,13 +17,15 @@ app.use(
 );
 
 // const __dirname = path.resolve();
-app.use(express.static(path.join(__dirname, "/front/build")));
+// console.log(path.dirname(__dirname));
+app.use(express.static(path.join(path.dirname(__dirname), "/front/build")));
 app.get("*", (req, res) =>
-  res.sendFile(path.join(__dirname, "/front/build/index.html"))
+  res.sendFile(path.join(path.dirname(__dirname), "/front/build/index.html"))
 );
 
 const db = require("./models");
 const productsRoutes = require("./routes/products.routes");
+const { Dir } = require("fs");
 db.sequelize.sync().then(() => console.log("db is ready"));
 app.use("/api/products", productsRoutes);
 // app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
