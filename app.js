@@ -20,5 +20,5 @@ const db = require("./models");
 const productsRoutes = require("./routes/products.routes");
 db.sequelize.sync().then(() => console.log("db is ready"));
 app.use("/api/products", productsRoutes);
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+// app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 module.exports = app;
